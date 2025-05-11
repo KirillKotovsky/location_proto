@@ -1,0 +1,13 @@
+# Generated protobuf code
+proto/**/*.pb.go
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# VSCode backups
+*.code-workspace
