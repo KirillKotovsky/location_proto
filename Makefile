@@ -1,7 +1,8 @@
-PROTO_DIR=proto/location
-OUT_DIR=proto/location
+PROTO_DIR=proto
+OUT_DIR=.
 
 generate:
+	mkdir -p $(OUT_DIR)
 	protoc \
 		--go_out=$(OUT_DIR) \
 		--go_opt=paths=source_relative \

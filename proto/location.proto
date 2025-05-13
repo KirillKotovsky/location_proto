@@ -1,8 +1,9 @@
 syntax = "proto3";
 
-package location;
 
-option go_package = "github.com/KirillKotovsky/location_proto/proto/location;locationpb";
+
+option go_package = "github.com/KirillKotovsky/location_proto/proto;locationpb";
+
 
 message Location {
   string username = 1;
