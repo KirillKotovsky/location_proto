@@ -1,21 +1,25 @@
 syntax = "proto3";
 
-
+package locationpb;
 
 option go_package = "github.com/KirillKotovsky/location_proto/proto;locationpb";
 
+import "google/protobuf/timestamp.proto";
 
+// Сообщение для локации
 message Location {
   string username = 1;
   double latitude = 2;
   double longitude = 3;
-  string timestamp = 4;
+  google.protobuf.Timestamp timestamp = 4;
 }
 
+// Ответ на StoreLocation
 message Result {
-  string status = 1;
+  bool success = 1;
 }
 
+// gRPC сервис
 service LocationTracker {
   rpc StoreLocation(Location) returns (Result);
 }

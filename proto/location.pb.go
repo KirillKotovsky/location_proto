@@ -9,6 +9,7 @@ package locationpb
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -21,12 +22,13 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Сообщение для локации
 type Location struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	Latitude      float64                `protobuf:"fixed64,2,opt,name=latitude,proto3" json:"latitude,omitempty"`
 	Longitude     float64                `protobuf:"fixed64,3,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	Timestamp     string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -82,16 +84,17 @@ func (x *Location) GetLongitude() float64 {
 	return 0
 }
 
-func (x *Location) GetTimestamp() string {
+func (x *Location) GetTimestamp() *timestamppb.Timestamp {
 	if x != nil {
 		return x.Timestamp
 	}
-	return ""
+	return nil
 }
 
+// Ответ на StoreLocation
 type Result struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Status        string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -126,27 +129,28 @@ func (*Result) Descriptor() ([]byte, []int) {
 	return file_proto_location_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Result) GetStatus() string {
+func (x *Result) GetSuccess() bool {
 	if x != nil {
-		return x.Status
+		return x.Success
 	}
-	return ""
+	return false
 }
 
 var File_proto_location_proto protoreflect.FileDescriptor
 
 const file_proto_location_proto_rawDesc = "" +
 	"\n" +
-	"\x14proto/location.proto\"~\n" +
+	"\x14proto/location.proto\x12\n" +
+	"locationpb\x1a\x1fgoogle/protobuf/timestamp.proto\"\x9a\x01\n" +
 	"\bLocation\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\blatitude\x18\x02 \x01(\x01R\blatitude\x12\x1c\n" +
-	"\tlongitude\x18\x03 \x01(\x01R\tlongitude\x12\x1c\n" +
-	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\" \n" +
-	"\x06Result\x12\x16\n" +
-	"\x06status\x18\x01 \x01(\tR\x06status26\n" +
-	"\x0fLocationTracker\x12#\n" +
-	"\rStoreLocation\x12\t.Location\x1a\a.ResultB;Z9github.com/KirillKotovsky/location_proto/proto;locationpbb\x06proto3"
+	"\tlongitude\x18\x03 \x01(\x01R\tlongitude\x128\n" +
+	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"\"\n" +
+	"\x06Result\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2L\n" +
+	"\x0fLocationTracker\x129\n" +
+	"\rStoreLocation\x12\x14.locationpb.Location\x1a\x12.locationpb.ResultB;Z9github.com/KirillKotovsky/location_proto/proto;locationpbb\x06proto3"
 
 var (
 	file_proto_location_proto_rawDescOnce sync.Once
@@ -162,17 +166,19 @@ func file_proto_location_proto_rawDescGZIP() []byte {
 
 var file_proto_location_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_location_proto_goTypes = []any{
-	(*Location)(nil), // 0: Location
-	(*Result)(nil),   // 1: Result
+	(*Location)(nil),              // 0: locationpb.Location
+	(*Result)(nil),                // 1: locationpb.Result
+	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
 }
 var file_proto_location_proto_depIdxs = []int32{
-	0, // 0: LocationTracker.StoreLocation:input_type -> Location
-	1, // 1: LocationTracker.StoreLocation:output_type -> Result
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: locationpb.Location.timestamp:type_name -> google.protobuf.Timestamp
+	0, // 1: locationpb.LocationTracker.StoreLocation:input_type -> locationpb.Location
+	1, // 2: locationpb.LocationTracker.StoreLocation:output_type -> locationpb.Result
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_proto_location_proto_init() }

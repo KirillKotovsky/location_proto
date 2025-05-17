@@ -19,12 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LocationTracker_StoreLocation_FullMethodName = "/LocationTracker/StoreLocation"
+	LocationTracker_StoreLocation_FullMethodName = "/locationpb.LocationTracker/StoreLocation"
 )
 
 // LocationTrackerClient is the client API for LocationTracker service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// gRPC сервис
 type LocationTrackerClient interface {
 	StoreLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Result, error)
 }
@@ -50,6 +52,8 @@ func (c *locationTrackerClient) StoreLocation(ctx context.Context, in *Location,
 // LocationTrackerServer is the server API for LocationTracker service.
 // All implementations must embed UnimplementedLocationTrackerServer
 // for forward compatibility.
+//
+// gRPC сервис
 type LocationTrackerServer interface {
 	StoreLocation(context.Context, *Location) (*Result, error)
 	mustEmbedUnimplementedLocationTrackerServer()
@@ -108,7 +112,7 @@ func _LocationTracker_StoreLocation_Handler(srv interface{}, ctx context.Context
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var LocationTracker_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "LocationTracker",
+	ServiceName: "locationpb.LocationTracker",
 	HandlerType: (*LocationTrackerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
