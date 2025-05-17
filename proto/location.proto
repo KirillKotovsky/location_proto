@@ -17,6 +17,7 @@ message Location {
 // Ответ на StoreLocation
 message Result {
   bool success = 1;
+  string status = 2;
 }
 
 // gRPC сервис

@@ -95,6 +95,7 @@ func (x *Location) GetTimestamp() *timestamppb.Timestamp {
 type Result struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -136,6 +137,13 @@ func (x *Result) GetSuccess() bool {
 	return false
 }
 
+func (x *Result) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
 var File_proto_location_proto protoreflect.FileDescriptor
 
 const file_proto_location_proto_rawDesc = "" +
@@ -146,9 +154,10 @@ const file_proto_location_proto_rawDesc = "" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\blatitude\x18\x02 \x01(\x01R\blatitude\x12\x1c\n" +
 	"\tlongitude\x18\x03 \x01(\x01R\tlongitude\x128\n" +
-	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"\"\n" +
+	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\":\n" +
 	"\x06Result\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2L\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status2L\n" +
 	"\x0fLocationTracker\x129\n" +
 	"\rStoreLocation\x12\x14.locationpb.Location\x1a\x12.locationpb.ResultB;Z9github.com/KirillKotovsky/location_proto/proto;locationpbb\x06proto3"
 
