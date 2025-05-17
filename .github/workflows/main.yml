@@ -30,6 +30,9 @@ jobs:
       - name: Generate proto code
         run: make generate
 
+      - name: List generated proto files
+        run: ls -R proto
+
       - name: Verify module
         run: |
           go mod tidy
