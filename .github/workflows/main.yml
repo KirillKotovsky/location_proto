@@ -45,8 +45,9 @@ jobs:
       - name: Commit and push generated files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore(proto): auto-generate pb files and pkgs"
+          commit_message: "chore(proto): auto-generate pb files"
           file_pattern: proto/*.pb.go
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Bump version and push tag
         id: tag
