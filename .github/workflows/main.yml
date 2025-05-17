@@ -42,12 +42,16 @@ jobs:
           go mod tidy
           go build ./...
 
-      - name: Commit and push generated files
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore(proto): auto-generate pb files"
-          file_pattern: proto/*.pb.go
-          token: ${{ secrets.GH_TOKEN }}
+      - name: Commit generated pb files
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
+          git add proto/*.pb.go
+          git commit -m "chore(proto): auto-generate pb files" || echo "Nothing to commit"
+          git push
 
       - name: Bump version and push tag
         id: tag
