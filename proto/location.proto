@@ -33,5 +33,5 @@ message DistanceRequest {
 }
 
 message DistanceResponse {
-  double distance_km = 1;
+   optional double distance_km = 1;
 }
