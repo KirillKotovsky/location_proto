@@ -2,6 +2,9 @@ name: Release Proto (Manual)
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   release:
