@@ -144,6 +144,110 @@ func (x *Result) GetStatus() string {
 	return ""
 }
 
+type DistanceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	StartTime     string                 `protobuf:"bytes,2,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"` // ISO 8601 format
+	EndTime       string                 `protobuf:"bytes,3,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`       // ISO 8601 format
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DistanceRequest) Reset() {
+	*x = DistanceRequest{}
+	mi := &file_proto_location_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DistanceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DistanceRequest) ProtoMessage() {}
+
+func (x *DistanceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_location_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DistanceRequest.ProtoReflect.Descriptor instead.
+func (*DistanceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_location_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *DistanceRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *DistanceRequest) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *DistanceRequest) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+type DistanceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DistanceKm    float64                `protobuf:"fixed64,1,opt,name=distance_km,json=distanceKm,proto3" json:"distance_km,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DistanceResponse) Reset() {
+	*x = DistanceResponse{}
+	mi := &file_proto_location_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DistanceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DistanceResponse) ProtoMessage() {}
+
+func (x *DistanceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_location_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DistanceResponse.ProtoReflect.Descriptor instead.
+func (*DistanceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_location_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *DistanceResponse) GetDistanceKm() float64 {
+	if x != nil {
+		return x.DistanceKm
+	}
+	return 0
+}
+
 var File_proto_location_proto protoreflect.FileDescriptor
 
 const file_proto_location_proto_rawDesc = "" +
@@ -157,9 +261,18 @@ const file_proto_location_proto_rawDesc = "" +
 	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\":\n" +
 	"\x06Result\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x16\n" +
-	"\x06status\x18\x02 \x01(\tR\x06status2L\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\"g\n" +
+	"\x0fDistanceRequest\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x02 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x03 \x01(\tR\aendTime\"3\n" +
+	"\x10DistanceResponse\x12\x1f\n" +
+	"\vdistance_km\x18\x01 \x01(\x01R\n" +
+	"distanceKm2\x9c\x01\n" +
 	"\x0fLocationTracker\x129\n" +
-	"\rStoreLocation\x12\x14.locationpb.Location\x1a\x12.locationpb.ResultB;Z9github.com/KirillKotovsky/location_proto/proto;locationpbb\x06proto3"
+	"\rStoreLocation\x12\x14.locationpb.Location\x1a\x12.locationpb.Result\x12N\n" +
+	"\x11CalculateDistance\x12\x1b.locationpb.DistanceRequest\x1a\x1c.locationpb.DistanceResponseB;Z9github.com/KirillKotovsky/location_proto/proto;locationpbb\x06proto3"
 
 var (
 	file_proto_location_proto_rawDescOnce sync.Once
@@ -173,18 +286,22 @@ func file_proto_location_proto_rawDescGZIP() []byte {
 	return file_proto_location_proto_rawDescData
 }
 
-var file_proto_location_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_proto_location_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_location_proto_goTypes = []any{
 	(*Location)(nil),              // 0: locationpb.Location
 	(*Result)(nil),                // 1: locationpb.Result
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(*DistanceRequest)(nil),       // 2: locationpb.DistanceRequest
+	(*DistanceResponse)(nil),      // 3: locationpb.DistanceResponse
+	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
 }
 var file_proto_location_proto_depIdxs = []int32{
-	2, // 0: locationpb.Location.timestamp:type_name -> google.protobuf.Timestamp
+	4, // 0: locationpb.Location.timestamp:type_name -> google.protobuf.Timestamp
 	0, // 1: locationpb.LocationTracker.StoreLocation:input_type -> locationpb.Location
-	1, // 2: locationpb.LocationTracker.StoreLocation:output_type -> locationpb.Result
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	2, // 2: locationpb.LocationTracker.CalculateDistance:input_type -> locationpb.DistanceRequest
+	1, // 3: locationpb.LocationTracker.StoreLocation:output_type -> locationpb.Result
+	3, // 4: locationpb.LocationTracker.CalculateDistance:output_type -> locationpb.DistanceResponse
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -201,7 +318,7 @@ func file_proto_location_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_location_proto_rawDesc), len(file_proto_location_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

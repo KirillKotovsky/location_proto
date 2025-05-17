@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LocationTracker_StoreLocation_FullMethodName = "/locationpb.LocationTracker/StoreLocation"
+	LocationTracker_StoreLocation_FullMethodName     = "/locationpb.LocationTracker/StoreLocation"
+	LocationTracker_CalculateDistance_FullMethodName = "/locationpb.LocationTracker/CalculateDistance"
 )
 
 // LocationTrackerClient is the client API for LocationTracker service.
@@ -29,6 +30,7 @@ const (
 // gRPC сервис
 type LocationTrackerClient interface {
 	StoreLocation(ctx context.Context, in *Location, opts ...grpc.CallOption) (*Result, error)
+	CalculateDistance(ctx context.Context, in *DistanceRequest, opts ...grpc.CallOption) (*DistanceResponse, error)
 }
 
 type locationTrackerClient struct {
@@ -49,6 +51,16 @@ func (c *locationTrackerClient) StoreLocation(ctx context.Context, in *Location,
 	return out, nil
 }
 
+func (c *locationTrackerClient) CalculateDistance(ctx context.Context, in *DistanceRequest, opts ...grpc.CallOption) (*DistanceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DistanceResponse)
+	err := c.cc.Invoke(ctx, LocationTracker_CalculateDistance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LocationTrackerServer is the server API for LocationTracker service.
 // All implementations must embed UnimplementedLocationTrackerServer
 // for forward compatibility.
@@ -56,6 +68,7 @@ func (c *locationTrackerClient) StoreLocation(ctx context.Context, in *Location,
 // gRPC сервис
 type LocationTrackerServer interface {
 	StoreLocation(context.Context, *Location) (*Result, error)
+	CalculateDistance(context.Context, *DistanceRequest) (*DistanceResponse, error)
 	mustEmbedUnimplementedLocationTrackerServer()
 }
 
@@ -68,6 +81,9 @@ type UnimplementedLocationTrackerServer struct{}
 
 func (UnimplementedLocationTrackerServer) StoreLocation(context.Context, *Location) (*Result, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StoreLocation not implemented")
+}
+func (UnimplementedLocationTrackerServer) CalculateDistance(context.Context, *DistanceRequest) (*DistanceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CalculateDistance not implemented")
 }
 func (UnimplementedLocationTrackerServer) mustEmbedUnimplementedLocationTrackerServer() {}
 func (UnimplementedLocationTrackerServer) testEmbeddedByValue()                         {}
@@ -108,6 +124,24 @@ func _LocationTracker_StoreLocation_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LocationTracker_CalculateDistance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DistanceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocationTrackerServer).CalculateDistance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LocationTracker_CalculateDistance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocationTrackerServer).CalculateDistance(ctx, req.(*DistanceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LocationTracker_ServiceDesc is the grpc.ServiceDesc for LocationTracker service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -118,6 +152,10 @@ var LocationTracker_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StoreLocation",
 			Handler:    _LocationTracker_StoreLocation_Handler,
+		},
+		{
+			MethodName: "CalculateDistance",
+			Handler:    _LocationTracker_CalculateDistance_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
